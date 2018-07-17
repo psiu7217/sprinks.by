@@ -1,0 +1,47 @@
+<div class="featured_block">
+    <p class="title h3">Популярные товары</p>
+    <div class="row">
+        {% for product in products %}
+            <div class="product-layout col-lg-4 col-md-4 col-sm-6 col-xs-12 text-center">
+                <div class="box_shadow">
+                    <div class="product-thumb transition">
+                        <div class="name"><a href="{{ product.href }}">{{ product.name }}</a></div>
+                        <div class="image">
+                            <a href="{{ product.href }}">
+                                <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+                            </a>
+                        </div>
+                        <div class="caption">
+                            {% if product.price %}
+                                <p class="price">
+                                    {% if not product.special %}
+                                        {{ product.price }}
+                                    {% else %}
+                                        <span class="price-new">{{ product.special }}</span>
+                                        <span class="price-old">{{ product.price }}</span>
+                                    {% endif %}
+                                    {% if product.tax %}
+                                        <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <div class="button-group">
+                            <button type="button" onclick="cart.add('{{ product.product_id }}');" class="btn btn_add_cart">
+                                <span>{{ button_cart }}</span>
+                            </button>
+                        </div>
+                        <div class="dop_btn">
+                            <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                            <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');">
+                                <i class="fa fa-exchange"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

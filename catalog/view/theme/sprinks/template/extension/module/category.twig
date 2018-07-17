@@ -1,0 +1,35 @@
+<div class="left_menu_block">
+    <p class="title">{{ title_1 }}</p>
+    {% if categories %}
+        <ul>
+            {% for category in categories %}
+                {% if category.category_id == category_id %}
+                    <li>
+                        <a href="{{ category.href }}" class="active">{{ category.name }}</a>
+                        {% if category.children %}
+                            <ul>
+                                {% for child in category.children %}
+                                    {% if child.category_id == child_id %}
+                                        <li><a href="{{ child.href }}" class="active">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a></li>
+                                    {% else %}
+                                        <li><a href="{{ child.href }}">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p class="title">{{ title_2 }}</p>
+    <ul>
+        <li><a href="{{ url_printer }}">{{ text_printer }}</a></li>
+        <li><a href="{{ url_monitor }}">{{ text_monitor }}</a></li>
+        <li><a href="{{ url_proekt }}">{{ text_proekt }}</a></li>
+        <li><a href="{{ url_skaner }}">{{ text_skaner }}</a></li>
+    </ul>
+</div>

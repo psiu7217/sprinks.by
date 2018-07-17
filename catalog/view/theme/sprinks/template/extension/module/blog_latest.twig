@@ -1,0 +1,28 @@
+<div class="blog-module latest blog">
+    <p class="main_title">Новости</p>
+
+    {% if posts %}
+        <div class="row">
+            {% for blog in posts %}
+                <div class="col-sm-4">
+                    <div class="blog_item">
+
+                        <div class="summary">
+                            {% if blog.image  and  thumb %}
+                                <div class="image">
+                                    <a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}"/></a>
+                                </div>
+                            {% endif %}
+
+                            <p class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></p>
+
+                            <p class="descr">{{ blog.description }}</p>
+                            <p><a href="{{ blog.href }}">{{ text_read_more }} <i class="fa fa-long-arrow-right"></i></a></p>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

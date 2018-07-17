@@ -1,0 +1,19 @@
+<div class="left_menu_block">
+    <p class="title">{{ title_1 }}</p>
+    {% if items_1 %}
+        <ul>
+            {% for item in items_1 %}
+                <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p class="title">{{ title_2 }}</p>
+    {% if items_2 %}
+        <ul>
+            {% for item in items_2 %}
+                <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

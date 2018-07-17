@@ -1,0 +1,62 @@
+{{ header }}
+<div id="information-information" class="container">
+
+    <ul class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% for breadcrumb in breadcrumbs %}
+            {% if not loop.last %}
+                <li itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                    <a href="{{ breadcrumb.href }}" itemprop="item">
+                        <span itemprop="name">{{ breadcrumb.text }}</span>
+                    </a>
+                </li>
+            {% else %}
+                <li itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                    <span itemprop="item">
+                        <span itemprop="name">{{ breadcrumb.text }}</span>
+                    </span>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <div class="row">
+        {{ column_left }}
+        {% if column_left and column_right %}
+            {% set class = 'col-sm-6' %}
+        {% elseif column_left or column_right %}
+            {% set class = 'col-sm-9' %}
+        {% else %}
+            {% set class = 'col-sm-12' %}
+        {% endif %}
+
+        <div id="content" class="{{ class }} information_page">
+            {{ content_top }}
+
+            {% if template %}
+                <h1>{{ heading_title }}</h1>
+                <p>{{ min_descr }}</p>
+                <div class="row template_block">
+                    <div class="col-sm-6">
+                        <div class="problem">
+                            <p class="title"><strong>Характерные неисправности техники:</strong></p>
+                            <p class="descr">{{ problem }}</p>
+                            <span class="btn_modal" data-toggle="modal" data-target="#send_modal">{{ btn_text }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 images_block">
+                        <img src="{{ image }}" alt="">
+                    </div>
+
+                </div>
+                {{ description }}
+            {% else %}
+                {{ description }}
+            {% endif %}
+
+            {{ content_bottom }}
+        </div>
+
+        {{ column_right }}
+    </div>
+</div>
+{{ footer }}

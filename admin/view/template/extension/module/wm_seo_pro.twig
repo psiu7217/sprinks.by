@@ -1,0 +1,132 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_wm_seo_url }}">{{ entry_wm_seo_url }}</span></label>
+            <div class="col-sm-10">
+              <label class="radio-inline"> {% if config_wm_seo_url %}
+                <input type="radio" name="module_wm_seo_pro_status" value="1" checked="checked" hidden/>
+                <input type="radio" name="config_wm_seo_url" value="1" checked="checked" />
+                {{ text_yes }}
+                {% else %}
+                <input type="radio" name="module_wm_seo_pro_status" value="1" hidden/>
+                <input type="radio" name="config_wm_seo_url" value="1" />
+                {{ text_yes }}
+                {% endif %} </label>
+              <label class="radio-inline"> {% if not config_wm_seo_url %}
+                <input type="radio" name="module_wm_seo_pro_status" value="0" checked="checked" hidden/>
+                <input type="radio" name="config_wm_seo_url" value="0" checked="checked" />
+                {{ text_no }}
+                {% else %}
+                <input type="radio" name="module_wm_seo_pro_status" value="0" hidden/>
+                <input type="radio" name="config_wm_seo_url" value="0" />
+                {{ text_no }}
+                {% endif %} </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ entry_wm_seo_url_include_path_help }}">{{ entry_wm_seo_url_include_path }}</span></label>
+            <div class="col-sm-10">
+            {% if config_wm_seo_url_include_path %}
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_include_path" value="1" checked="checked"/>
+            {{ text_yes }}
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_include_path" value="0"/>
+            {{ text_no }}
+            </label>
+            {% else %}
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_include_path" value="1"/>
+            {{ text_yes }}
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_include_path" value="0" checked="checked"/>
+            {{ text_no }}
+            </label>
+            {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="config_wm_seo_url_postfix"><span data-toggle="tooltip" title="{{ entry_wm_seo_url_postfix_help }}">{{ entry_wm_seo_url_postfix }}</span></label>
+            <div class="col-sm-10">
+            <input type="text" name="config_wm_seo_url_postfix" value="{{ config_wm_seo_url_postfix }}" id="config_wm_seo_url_postfix" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="config_wm_seo_url_utm"><span data-toggle="tooltip" title="{{ entry_wm_seo_url_utm_help }}">{{ entry_wm_seo_url_utm }}</span></label>
+            <div class="col-sm-10">
+            <textarea name="config_wm_seo_url_utm" rows="5" placeholder="{{ entry_wm_seo_url_utm }}" id="wm-seo-url-utm" class="form-control">{{ config_wm_seo_url_utm }}</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_wm_seo_url_https }}">{{ entry_wm_seo_url_https }}</span></label>
+            <div class="col-sm-10">
+            {% if config_wm_seo_url_https %}
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_https" value="1" checked="checked"/>
+            {{ text_yes }}
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_https" value="0"/>
+            {{ text_no }}
+            </label>
+            {% else %}
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_https" value="1"/>
+            {{ text_yes }}
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="config_wm_seo_url_https" value="0" checked="checked"/>
+            {{ text_no }}
+            </label>
+            {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="wm_seo_pro_license">{{ text_wm_seo_pro_license }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="wm_seo_pro_license" value="{{ wm_seo_pro_license }}" id="wm_seo_pro_license" class="form-control" disabled/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="alert">
+      <p>{{ text_support }}</p>
+    </div>
+  </div>
+</div>
+<script>
+  jQuery(document).ready(function($) {
+    $(document).on('click', 'input[name=config_wm_seo_url]', function(event) {
+      $(this).parent().find('input[name=module_wm_seo_pro_status]').attr('checked', 'checked');
+    });
+  });
+</script>
+{{ footer }}

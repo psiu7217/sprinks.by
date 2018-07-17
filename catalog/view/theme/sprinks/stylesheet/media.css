@@ -1,0 +1,131 @@
+@media screen and (max-width: 1199px) {
+    header .top_block .time_job {
+        font-size: 14px;
+    }
+    header .middle_block .info_block {
+        margin: 0 -20px 0 -15px;
+    }
+    header .middle_block .info_block p {
+        font-size: 14px;
+    }
+    header .middle_block .info_block p:nth-child(2) img {
+        width: 95px;
+    }
+    #cart a {
+        font-size: 12px;
+    }
+    #box-adsearch .cell-box #filter-name,
+    #filter-model,
+    #filter-category-id,
+    #filter-manufacturer {
+        width: 100% !important;
+    }
+    #tservices tr:nth-child(1) td:nth-child(3) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    #menu ul li a {
+        font-size: 12px;
+        padding: 0 7px 0 5px;
+    }
+    .left_menu_block ul li {
+        padding: 5px 5px 5px 5px;
+    }
+    .left_contact_block p {
+        font-size: 11px;
+    }
+    .left_contact_block {
+        padding: 0 0 15px 30px;
+    }
+    .product-layout .price {
+        font-size: 20px;
+    }
+    .product-layout .btn_add_cart {
+        width: 100%;
+    }
+    #product-product .main_img img {
+        width: 100%;
+        background: transparent !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #menu #category {
+        color: #fff;
+        font-size: 20px;
+        display: inline-block !important;
+        padding: 5px 0 0 10px;
+    }
+    #menu .navbar-toggle {
+        color: #fff;
+        padding: 2px 0 0 10px;
+    }
+    header .top_block {
+        height: auto;
+    }
+    header .top_block .logo img {
+        margin: 0 auto;
+    }
+    header .top_block .phones_block {
+        height: 30px;
+    }
+    header .top_block .time_job {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        height: 30px;
+    }
+    header .top_block .time_job p {
+        margin: 0 0 0 10px;
+    }
+    header .middle_block .info_block {
+        text-align: center;
+    }
+    header .middle_block .info_block p {
+        display: inline-block;
+    }
+    header .middle_block {
+        margin: 5px 0 10px 0;
+    }
+    #search {
+        margin: 7px 0 7px 0;
+    }
+    #cart {
+        margin: 0;
+    }
+    .collapse.in {
+        z-index: 100001;
+        position: absolute;
+        width: 100%;
+        background: #1c2a5a;
+    }
+    #menu ul li a:after {
+        display: none;
+    }
+    #menu ul li a {
+        font-size: 18px;
+        padding: 0;
+        justify-content: center;
+    }
+    #product-product .main_img img {
+        width: auto;
+    }
+    .information_page table{
+        width: 100% !important;
+    }
+}
+@media screen and (max-width: 590px) {
+
+}
+@media screen and (max-width: 450px) {
+
+}
+
+@media screen and (max-width: 400px) {
+
+}
+@media screen and (max-width: 350px) {
+
+}

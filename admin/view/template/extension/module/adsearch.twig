@@ -1,0 +1,217 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+        <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    {% endif %}
+      
+     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-keywords">{{ entry_adsearch_keywords }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_keywords %}
+                  <label><input type="radio" name="module_adsearch_keywords" value="1" checked="checked" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_keywords" value="0" />&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_keywords" value="1" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_keywords" value="0" checked="checked" />&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div> 
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-model">{{ entry_adsearch_model }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_model %}
+                  <label><input type="radio" name="module_adsearch_model" value="1" checked="checked" />&nbsp;&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_model" value="0" />&nbsp;&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_model" value="1" />&nbsp;&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_model" value="0" checked="checked" />&nbsp;&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div> 
+               
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-price">{{ entry_adsearch_price }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_price %}
+                  <label><input type="radio" name="module_adsearch_price" value="1" checked="checked" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_price" value="0" />&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_price" value="1" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_price" value="0" checked="checked" />&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div>        
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-category">{{ entry_adsearch_category }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_category %}
+                  <label><input type="radio" name="module_adsearch_category" value="1" checked="checked" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_category" value="0" />&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_category" value="1" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_category" value="0" checked="checked" />&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-category-view">{{ entry_adsearch_category_view }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_category_view %}
+                  <label><input type="radio" name="module_adsearch_category_view" value="1" checked="checked" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_category_view" value="0" />&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_category_view" value="1" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_category_view" value="0" checked="checked" />&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-brend">{{ entry_adsearch_brend }}</label>
+            <div class="col-sm-2">
+                {% if module_adsearch_brend['brend'] %}
+                  <label><input type="radio" name="module_adsearch_brend[brend]" value="1" checked="checked" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_brend[brend]" value="0" />&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_brend[brend]" value="1" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_brend[brend]" value="0" checked="checked" />&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+            <div class="col-sm-1">
+                <select name="module_adsearch_brend[type]" id="brend">
+                {% for  value in box_type %}
+                        {% if module_adsearch_brend.type == value %}
+                            <option selected value="{{ value }}">{{ value }}</option>
+                        {% else %}
+                            <option value="{{ value }}">{{ value }}</option>
+                        {% endif %}
+                {% endfor %}
+                </select> 
+            </div>
+            <div class="col-sm-2" id="brend-image">{{ entry_image }}&nbsp;&nbsp;
+                {% if module_adsearch_brend['image'] %}
+                  <label><input type="radio" name="module_adsearch_brend[image]" value="1" checked="checked" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_brend[image]" value="0" />&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_brend[image]" value="1" />&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_brend[image]" value="0" checked="checked" />&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div> 
+
+            
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-countproduct">{{ entry_adsearch_countproduct }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_countproduct %}
+                  <label><input type="radio" name="module_adsearch_countproduct" value="1" checked="checked" />&nbsp;&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_countproduct" value="0" />&nbsp;&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_countproduct" value="1" />&nbsp;&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_countproduct" value="0" checked="checked" />&nbsp;&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div>
+ 
+           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-showterms">{{ entry_adsearch_showterms }}</label>
+            <div class="col-sm-10">
+                {% if module_adsearch_showterms %}
+                  <label><input type="radio" name="module_adsearch_showterms" value="1" checked="checked" />&nbsp;&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_showterms" value="0" />&nbsp;&nbsp;{{ text_no }}</label>
+                {% else %}
+                  <label><input type="radio" name="module_adsearch_showterms" value="1" />&nbsp;&nbsp;{{ text_yes }}</label>&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="module_adsearch_showterms" value="0" checked="checked" />&nbsp;&nbsp;{{ text_no }}</label>
+                {% endif %}
+            </div>
+          </div>
+          
+           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-viewproduct">{{ entry_adsearch_viewproduct }}</label>
+            <div class="col-sm-10">
+             <select name="module_adsearch_viewproduct">
+                <option value="">-- {{ text_adsearch_viewproduct }} --</option>
+                {% for value in stockstatus %}
+                    {% if value.stock_status_id == module_adsearch_viewproduct %}
+                       <option selected value="{{ value.stock_status_id }}">{{ value.name }}</option>
+                    {% else %}
+                       <option value="{{ value.stock_status_id }}">{{ value.name }}</option>
+                    {% endif %}
+                {% endfor %}
+             </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-width">{{ entry_width_height }}</label>
+            <div class="col-sm-2">
+              <input type="text" name="module_adsearch_width" value="{{ module_adsearch_width }}" placeholder="{{ entry_adsearch_width }}" id="input-width" class="form-control" />
+                {% if error_adsearch_width %}
+                  <div class="text-danger">{{ error_adsearch_width }}</div>
+                {% endif %}
+            </div>
+            <div class="col-sm-2">
+               <input type="text" name="module_adsearch_height" value="{{ module_adsearch_height }}" placeholder="{{ entry_adsearch_height }}" id="input-height" class="form-control" />
+                {% if error_adsearch_height %}
+                  <div class="text-danger">{{ error_adsearch_height }}</div>
+                {% endif %}
+            </div>
+          </div>             
+            
+  
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="module_adsearch_status" id="input-status" class="form-control">
+               {% if module_adsearch_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div> 
+        </form>
+          </div> 
+        </div> 
+      </div>
+    </div>
+<script type="text/javascript" charset="UTF-8">
+    $(document).ready(function(){
+
+       $('#brend').change(function(){
+           if ($('#brend').val()=="select") { 
+               $("#brend-image").css("display", "none");
+           } else {
+               $("#brend-image").css("display", "block");
+           }
+       });        
+
+   });  
+
+</script>
+{{ footer }}

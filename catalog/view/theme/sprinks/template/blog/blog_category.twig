@@ -1,0 +1,110 @@
+{{ header }}
+<div class="container">
+
+    <ul class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% for breadcrumb in breadcrumbs %}
+            {% if not loop.last %}
+                <li itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                    <a href="{{ breadcrumb.href }}" itemprop="item">
+                        <span itemprop="name">{{ breadcrumb.text }}</span>
+                    </a>
+                </li>
+            {% else %}
+                <li itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                    <span itemprop="item">
+                        <span itemprop="name">{{ breadcrumb.text }}</span>
+                    </span>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <div class="row">
+        {{ column_left }}
+        {% if column_left and column_right %}
+            {% set class = 'col-sm-6' %}
+        {% elseif column_left or column_right %}
+            {% set class = 'col-sm-9' %}
+        {% else %}
+            {% set class = 'col-sm-12' %}
+        {% endif %}
+
+        <div id="content" class="{{ class }}">
+            {{ content_top }}
+            <div class="blog blog_category">
+                {#<h1>{{ heading_title }}</h1>#}
+
+                {% if blog_category_description %}
+                    <div class="main_description">
+                        {{ blog_category_description }}
+                    </div>
+                {% endif %}
+
+                {% if blogs %}
+
+                    <div class="row">
+                    <div class="col-sm-12">
+
+                        {% for blog in blogs %}
+                            <div class="blog_item">
+
+                                <div class="summary">
+                                    <p class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></p>
+                                    <div class="blog_stats">
+
+                                        {% if author_status %}
+                                            <span>
+                                                <i class="fa fa-user"></i>
+                                                <b class="text">{{ text_posted_by }}</b>
+                                                <b class="hl">{{ blog.author }}</b>
+                                            </span>
+                                        {% endif %}
+
+                                        {% if date_added_status %}
+                                            <span>
+                                                <i class="fa fa-clock-o"></i>
+                                                <b class="text">{{ text_posted_on }}</b>
+                                                <b class="hl">{{ blog.date_added_full }}</b>
+                                            </span>
+                                        {% endif %}
+
+                                        {#
+                                        {% if page_view_status %}
+                                            <span>
+                                                <i class="fa fa-eye"></i>
+                                                <b class="text">{{ text_read }}</b>
+                                                <b class="hl">{{ blog.count_read }}</b>
+                                            </span>
+                                        {% endif %}
+                                        #}
+                                        {% if comments_count_status %}
+                                            <span>
+                                                <i class="fa fa-comments"></i>
+                                                <b class="text">{{ text_comments }}</b>
+                                                <b class="hl">{{ blog.comment_total }}</b>
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                    <p>{{ blog.short_description }}</p>
+
+                                    <p><a href="{{ blog.href }}">{{ text_read_more }} <i class="fa fa-long-arrow-right"></i></a></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 text-left">{{ pagination }}</div>
+                        <div class="col-sm-12 text-left">{{ results }}</div>
+                    </div>
+                {% else %}
+                    {{ text_no_results }}
+                {% endif %}
+            </div>
+            {{ content_bottom }}</div>
+        {{ column_right }}</div>
+</div>
+{{ footer }}  

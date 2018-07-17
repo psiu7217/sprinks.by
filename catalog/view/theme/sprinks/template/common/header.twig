@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]>
+<html lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]>
+<html lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }}</title>
+    <base href="{{ base }}"/>
+    {% if description %}
+        <meta name="description" content="{{ description }}"/>
+    {% endif %}
+    {% if keywords %}
+        <meta name="keywords" content="{{ keywords }}"/>
+    {% endif %}
+    <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel='stylesheet' type='text/css'/>
+    <link href="catalog/view/theme/sprinks/stylesheet/stylesheet.css" rel="stylesheet">
+    <link href="catalog/view/theme/sprinks/stylesheet/media.css" rel="stylesheet">
+    {% for style in styles %}
+        <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+    {% endfor %}
+    {% for script in scripts %}
+        <script src="{{ script }}" type="text/javascript"></script>
+    {% endfor %}
+    <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+    {% for link in links %}
+        <link href="{{ link.href }}" rel="{{ link.rel }}"/>
+    {% endfor %}
+    {% for analytic in analytics %}
+        {{ analytic }}
+    {% endfor %}
+</head>
+<body>
+
+
+<header>
+    <div class="container">
+        <div class="top_block">
+            <div class="col-md-3 col-sm-3">
+                <div class="logo">
+                    {% if logo %}
+                        <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-5">
+                <div class="phones_block text-center">
+                    <p>
+                        <span class="icon_phone velcom">+375 29 193-30-80</span>
+                        <span class="icon_phone mts">+375 33 334-23-16</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="time_job text-center">
+                    <p><i class="fa fa-clock-o"></i> c 9-00 до 18-00 пн-пт</p>
+                    <p>Минск, ул. Я. Коласа, дом 63</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="middle_block">
+        <div class="container">
+            <div class="col-md-3 col-sm-4">
+                <div class="info_block">
+                    <p>Авторизованный партнер <img src="catalog/view/theme/sprinks/image/brand/Epson.png" alt="Логотип Epson">
+                    </p>
+                    <p>Официальный дилер <img src="catalog/view/theme/sprinks/image/brand/lamond.png" alt="Логотип LOMOND"></p>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-4">
+                {{ search }}
+            </div>
+            <div class="col-md-4 col-sm-4">
+                {{ cart }}
+            </div>
+        </div>
+    </div>
+
+    {{ menu }}
+
+
+</header>

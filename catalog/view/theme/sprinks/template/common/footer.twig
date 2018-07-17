@@ -1,0 +1,199 @@
+<footer>
+    <div class="bg_black">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="h5">{{ text_information }}</p>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ contacts_url }}">{{ text_contacts }}</a></li>
+                        <li><a href="{{ about_url }}">{{ text_about }}</a></li>
+                        <li><a href="{{ news_url }}">{{ text_news }}</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <p class="h5">{{ text_service }}</p>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+                        <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <p class="h5">{{ text_account }}</p>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+                        <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+                        <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <p class="h5">{{ text_info }}</p>
+                    <ul class="list-unstyled" itemscope="" itemtype="http://schema.org/Organization">
+                        <li itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><p>{{ text_address }}</p></li>
+                        <li><p>{{ text_phone }}</p></li>
+                        <li><a href="mailto:{{ url_mail }}">{{ text_mail }}</a></li>
+                        <li><a href="skype:{{ url_skype }}?call">{{ text_skype }}</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg_white">
+        <div class="container">
+            <p class="powered">Производственно-торговое частное унитарное предприятие "Спринкс". Зарегестрировано от 17 мая 2000г. Минским
+                горисполкомом.<br>
+                Сайт внесен в торговый реестр РБ от 29 марта 2016. Регистрационный номер №314692. <br>
+                Sprinks © {{ powered }}. Все права защищены. | Разработка и продвижение сайта <a href="https://webernetic.by">Webernetic.by</a></p>
+        </div>
+    </div>
+
+</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="send_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form class="send_form">
+                    <div class="form-group">
+                        <label>Ваше имя</label>
+                        <input type="text" class="form-control" name="user_name" placeholder="Ваше имя">
+                    </div>
+                    <div class="form-group">
+                        <label>Ваш телефон*</label>
+                        <input type="tel" class="form-control mask" name="user_phone" placeholder="Телефон" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Время звонка</label>
+                        <input type="text" class="form-control" name="user_time" placeholder="Время звонка">
+                    </div>
+                    <div class="form-group">
+                        <label>Устройство</label>
+                        <input type="text" class="form-control" name="user_item" placeholder="Устройство">
+                    </div>
+
+
+
+
+                    <button type="submit" class="btn btn_blue">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Success -->
+<div class="modal fade text-center" id="modal_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="title">Ваша заявка отправна.</p>
+            </div>
+            <div class="modal-body">
+                <p>Мы свяжемся с вами в течении 40 минут</p>
+                <p>Спасибо, что вы обратились к нам!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn_blue" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.send_form').submit(function () {
+        var data = $(this).serialize();
+
+        $.ajax({
+            url: 'index.php?route=information/contact/send',
+            type: "POST",
+            data: data,
+            success: function (data) {
+                console.log(data);
+                $('.send_form .form-control').val('');
+                $('#send_modal').modal('hide');
+                $('#modal_success').modal('show');
+            },
+            error: function (xhr, str) {
+                result('Ошибка отправки сообщения', true);
+                alert('Возникла ошибка: ' + xhr.responseCode);
+            }
+        });
+
+        return false;
+    });
+</script>
+
+{% for script in scripts %}
+    <script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function () {
+            try {
+                w.yaCounter23523841 = new Ya.Metrika({
+                    id: 23523841,
+                    webvisor: true,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true
+                });
+            } catch (e) {
+            }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () {
+                n.parentNode.insertBefore(s, n);
+            };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else {
+            f();
+        }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript>
+    <div><img src="//mc.yandex.ru/watch/23523841" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-109203869-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-109203869-1');
+</script>
+
+<script type="text/javascript" src="//web.it-center.by/?do=work_v3&user=sprinksby" charset="UTF-8"></script>
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+    (function () {
+        var widget_id = 'jqXPPDV9Gq';
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//code.jivosite.com/script/widget/' + widget_id;
+        var ss = document.getElementsByTagName('script')[0];
+        ss.parentNode.insertBefore(s, ss);
+    })();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+</body>
+</html>

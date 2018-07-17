@@ -1,0 +1,586 @@
+<div class="panel panel-default" id="box-adsearch">
+    <div class="panel-heading">{{ heading_title }}</div>
+    <div class="row panel-body">
+        <form class="form-inline" role="form" action="" method="post" enctype="multipart/form-data" id="form-adsearch">
+
+            {% if position == 'content_top'  or position == 'content_bottom' %}
+
+                <style>
+                    #box-adsearch .cell-box {
+                        float: left;
+                        padding: 0 5px 5px 10px;
+                        margin-bottom: 5px;
+                    }
+
+                    #box-adsearch .cell-box #filter-name, #filter-model, #filter-category-id, #filter-manufacturer {
+                        width: 200px;
+                        height: 30px;
+                    }
+
+                    #box-adsearch .cell-box-fieldset legend {
+                        font-size: 12px;
+                        margin: 0px;
+                        padding: 0px;
+                        border: 0;
+                        width: auto;
+                        cursor: pointer;
+                    }
+
+                    #box-adsearch #box-brend .brend {
+                        width: 14px;
+                        height: 14px;
+                        margin: 0;
+                        padding: 0;
+                        margin-top: -7px;
+                        cursor: pointer;
+                        z-index: 10;
+                        opacity: 0;
+                    }
+
+                    #box-adsearch img.active {
+                        opacity: 0.4;
+                        border: 1px solid #000;
+                    }
+
+                    #box-adsearch #box-groups-op #image-optin input {
+                        width: 14px;
+                        height: 14px;
+                        margin: 0;
+                        padding: 0;
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        margin-top: -7px;
+                        cursor: pointer;
+                        z-index: 10;
+                        opacity: 0;
+                    }
+
+                    #box-adsearch .cell-box .box-price {
+                        float: left;
+                    }
+
+                    #box-adsearch #slider {
+                        margin-left: 7px;
+                    }
+                </style>
+
+
+                <!--keywords-->
+                {% if module_adsearch_keywords %}
+                    <div class="cell-box">
+                        <div>{{ entry_search }}</div>
+                        <div><input autocomplete="off" type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_search }}"
+                                    id="filter-name"/></div>
+                        <div>
+                            <label>
+                                {% if filter_description %}
+                                    <input type="checkbox" name="filter_description" id="filter-description" checked="checked"/>
+                                {% else %}
+                                    <input type="checkbox" name="filter_description" id="filter-description"/>
+                                {% endif %}
+                                {{ entry_description }}
+                            </label>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <!--model-->
+                {% if module_adsearch_model %}
+                    <div class="cell-box">
+                        <div>{{ entry_model }}</div>
+                        <div><input autocomplete="off" type="text" id="filter-model" name="filter_model" value="{{ filter_model }}"
+                                    placeholder="{{ entry_model }}"/></div>
+                        <div>&nbsp;</div>
+                    </div>
+                {% endif %}
+
+                <!--category-->
+                {% if module_adsearch_category %}
+                    <div class="cell-box">
+                        <div>{{ entry_category }}</div>
+                        <div>
+                            <select name="filter_category_id" id="filter-category-id">
+                                <option value="0">{{ text_category }}</option>
+                                {% for category in categories %}
+                                    {% if category.category_id == filter_category_id %}
+                                        <option value="{{ category.category_id }}" selected="selected">{{ category.name }}</option>
+                                    {% else %}
+                                        <option value="{{ category.category_id }}">{{ category.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label>
+                                {% if filter_sub_category %}
+                                    <input type="checkbox" name="filter_sub_category" id="filter-sub-category" checked="checked"/>
+                                {% else %}
+                                    <input type="checkbox" name="filter_sub_category" id="filter-sub-category"/>
+                                {% endif %}{{ text_sub_category }}
+                            </label>
+                        </div>
+                    </div>
+                {% else %}
+                    <input type="hidden" name="filter_category_id" value="0" id="filter-category-id"/>
+                    <input type="hidden" name="filter_sub_category" id="filter-sub-category" checked/>
+                {% endif %}
+
+
+                <!--brend-->
+                <div class="cell-box" id="box-manufacturer">
+                    {% if module_adsearch_brend.brend and manufacturers %}
+                        {% if module_adsearch_brend.image %}
+                            {% set imgbrendclass = 'brend' %}
+                        {% else %}
+                            {% set imgbrendclass = '' %}
+                        {% endif %}
+
+                        <div>{{ entry_manufacture }}</div>
+                        {% if module_adsearch_brend.type == 'select' %}
+                            <div class="brend">
+                                <select onchange="imgActive(this)" name="filter_manufacturer_id[]" class="filter-manufacturer-id"
+                                        id="filter-manufacturer">
+                                    <option value="">{{ text_manufacturer }}</option>
+                                    {% for manufacturer in manufacturers %}
+                                        {% if filter_manufacturer_id and manufacturer.manufacturer_id in filter_manufacturer_id %}
+                                            <option selected value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                        {% else %}
+                                            <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        {% else %}
+                            <div id="box-brend">
+                                {% for manufacturer in manufacturers %}
+                                    {% if manufacturer.manufacturer_id in filter_manufacturer_id %}
+                                        <div>
+                                            <label>
+                                                <input checked onclick="imgActive(this);" class="filter-manufacturer-id {{ imgbrendclass }} active"
+                                                       id="brend{{ manufacturer.manufacturer_id }}" type="{{ module_adsearch_brend.type }}"
+                                                       name="filter_manufacturer_id[]" value="{{ manufacturer.manufacturer_id }}"/>
+                                                {% if module_adsearch_brend['image'] %}
+                                                    <img class="active" id="brend{{ manufacturer.manufacturer_id }}im" src="{{ manufacturer.image }}">
+                                                {% endif %}
+                                                {{ manufacturer.name }}
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <label>
+                                                <input onclick="imgActive(this);" class="filter-manufacturer-id {{ imgbrendclass }}"
+                                                       id="brend{{ manufacturer.manufacturer_id }}" type="{{ module_adsearch_brend.type }}"
+                                                       name="filter_manufacturer_id[]" value="{{ manufacturer.manufacturer_id }}"/>
+                                                {% if module_adsearch_brend['image'] %}
+                                                    <img id="brend{{ manufacturer.manufacturer_id }}im" src="{{ manufacturer.image }}">
+                                                {% endif %}
+                                                {{ manufacturer.name }}
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+
+
+
+                <!--price-->
+                {% if module_adsearch_price %}
+                    <div class="cell-box">
+                        <div>{{ text_price }}</div>
+                        <div>
+                            {{ text_pricemin }} <input type="text" size="3" name="filter_pricemin" value="{{ filter_pricemin }}"
+                                                       id="filter-pricemin"/>&nbsp;&nbsp;&nbsp;
+                            {{ text_pricemax }} <input type="text" size="3" name="filter_pricemax" value="{{ filter_pricemax }}"
+                                                       id="filter-pricemax"/>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <!--button-->
+                <div class="col-sm-12 text-right">
+                    <span id="loader"></span>
+                    <input type="button" value="{{ button_search }}" id="button-adsearch" class="btn btn-primary"/>
+                </div>
+
+
+
+
+            {% elseif position == 'column_left' or position == 'column_right' %}
+                <style>
+                    #box-adsearch .cell-box {
+                        padding: 0 5px 5px 10px;
+                        margin-bottom: 5px;
+                    }
+
+                    #box-adsearch .cell-box #filter-name, #filter-model, #filter-category-id, #filter-manufacturer {
+                        width: 240px;
+                        height: 30px;
+                    }
+
+                    #box-adsearch .cell-box-fieldset legend {
+                        font-size: 12px;
+                        margin: 0px;
+                        padding: 0px;
+                        border: 0;
+                        width: auto;
+                        cursor: pointer;
+                    }
+
+                    #box-adsearch #box-brend .brend {
+                        width: 14px;
+                        height: 14px;
+                        margin: 0;
+                        padding: 0;
+                        margin-top: -7px;
+                        cursor: pointer;
+                        z-index: 10;
+                        opacity: 0;
+                    }
+
+                    #box-adsearch img.active {
+                        opacity: 0.4;
+                        border: 1px solid #000;
+                    }
+
+                    #box-adsearch #box-groups-op #image-optin input {
+                        width: 14px;
+                        height: 14px;
+                        margin: 0;
+                        padding: 0;
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        margin-top: -7px;
+                        cursor: pointer;
+                        z-index: 10;
+                        opacity: 0;
+                    }
+
+                    #box-adsearch .cell-box .box-price {
+                        float: left;
+                    }
+
+                    #box-adsearch #slider {
+                        margin-left: 7px;
+                    }
+                </style>
+
+                <!--keywords-->
+                {% if module_adsearch_keywords %}
+                    <div class="cell-box">
+                        <div>{{ entry_search }}</div>
+                        <div>
+                            <input autocomplete="off" type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_search }}"
+                                   id="filter-name"/>
+
+                            <label class="checkbox-inline" for="filter-description">
+                                {% if filter_description %}
+                                    <input type="checkbox" name="filter_description" id="filter-description" checked="checked"/>
+                                {% else %}
+                                    <input type="checkbox" name="filter_description" id="filter-description"/>
+                                {% endif %}
+                                {{ entry_description }}</label>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <!--model-->
+                {% if module_adsearch_model %}
+                    <div class="cell-box">
+                        <div class="">{{ entry_model }}</div>
+                        <div>
+                            <input autocomplete="off" type="text" id="filter-model" name="filter_model" value="{{ filter_model }}"
+                                   placeholder="{{ entry_model }}"/>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!--category-->
+                {% if module_adsearch_category %}
+                    <div class="cell-box">
+                        <div class="">{{ entry_category }}</div>
+                        <div>
+                            <select name="filter_category_id" id="filter-category-id">
+                                <option value="0">{{ text_category }}</option>
+                                {% for category in categories %}
+                                    {% if category.category_id == filter_category_id %}
+                                        <option value="{{ category.category_id }}" selected="selected">{{ category.name }}</option>
+                                    {% else %}
+                                        <option value="{{ category.category_id }}">{{ category.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <label class="checkbox-inline" for="filter-sub-category">
+                                {% if filter_sub_category %}
+                                    <input type="checkbox" name="filter_sub_category" id="filter-sub-category" checked="checked"/>
+                                {% else %}
+                                    <input type="checkbox" name="filter_sub_category" id="filter-sub-category"/>
+                                {% endif %}
+                                {{ text_sub_category }}</label>
+                        </div>
+                    </div>
+                {% else %}
+                    <input type="hidden" name="filter_category_id" value="0" id="filter-category-id"/>
+                    <input type="hidden" name="filter_sub_category" id="filter-sub-category" checked/>
+                {% endif %}
+
+
+
+                <!--brend-->
+                <div class="cell-box" id="box-manufacturer">
+                    {% if module_adsearch_brend.brend and manufacturers %}
+                        {% if module_adsearch_brend.image %}
+                            {% set imgbrendclass = 'brend' %}
+                        {% else %}
+                            {% set imgbrendclass = '' %}
+                        {% endif %}
+
+                        <div>{{ entry_manufacture }}</div>
+                        {% if module_adsearch_brend.type == 'select' %}
+                            <div class="brend">
+                                <select onchange="imgActive(this)" name="filter_manufacturer_id[]" class="filter-manufacturer-id"
+                                        id="filter-manufacturer">
+                                    <option value="">{{ text_manufacturer }}</option>
+                                    {% for manufacturer in manufacturers %}
+                                        {% if filter_manufacturer_id and manufacturer.manufacturer_id in filter_manufacturer_id %}
+                                            <option selected value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                        {% else %}
+                                            <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        {% else %}
+                            <div id="box-brend">
+                                {% for manufacturer in manufacturers %}
+                                    {% if manufacturer.manufacturer_id in filter_manufacturer_id %}
+                                        <div>
+                                            <label>
+                                                <input checked onclick="imgActive(this);" class="filter-manufacturer-id {{ imgbrendclass }} active"
+                                                       id="brend{{ manufacturer.manufacturer_id }}" type="{{ module_adsearch_brend.type }}"
+                                                       name="filter_manufacturer_id[]" value="{{ manufacturer.manufacturer_id }}"/>
+                                                {% if module_adsearch_brend['image'] %}
+                                                    <img class="active" id="brend{{ manufacturer.manufacturer_id }}im" src="{{ manufacturer.image }}">
+                                                {% endif %}
+                                                {{ manufacturer.name }}
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <label>
+                                                <input onclick="imgActive(this);" class="filter-manufacturer-id {{ imgbrendclass }}"
+                                                       id="brend{{ manufacturer.manufacturer_id }}" type="{{ module_adsearch_brend.type }}"
+                                                       name="filter_manufacturer_id[]" value="{{ manufacturer.manufacturer_id }}"/>
+                                                {% if module_adsearch_brend['image'] %}
+                                                    <img id="brend{{ manufacturer.manufacturer_id }}im" src="{{ manufacturer.image }}">
+                                                {% endif %}
+                                                {{ manufacturer.name }}
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+
+                <!--price-->
+                {% if module_adsearch_price %}
+                    <div class="cell-box">
+                        <div>{{ text_price }}</div>
+                        <div>
+                            <div class="box-price">
+                                {{ text_pricemin }} <input type="text" size="5" name="filter_pricemin" value="{{ filter_pricemin }}"
+                                                           id="filter-pricemin"/>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div>
+                                {{ text_pricemax }} <input type="text" size="5" name="filter_pricemax" value="{{ filter_pricemax }}"
+                                                           id="filter-pricemax"/>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <!--button-->
+                <div class="cell-box">
+                    <div style="text-align: right;">
+                        <span id="loader"></span>
+                        <input type="button" value="{{ button_search }}" id="button-adsearch" class="btn btn_blue"/>
+                    </div>
+                </div>
+
+
+            {% endif %}
+
+
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        {% if module_adsearch_keywords %}
+        $('#box-adsearch input[name=\'filter_name\']').autocomplete({
+            'source': function (request, response) {
+                if ($('#box-adsearch input[name=filter_description]').prop('checked')) {
+                    filter_description = 1
+                } else {
+                    filter_description = 0
+                }
+                $.ajax({
+                    url: 'index.php?route=extension/module/adsearch/adsearchautocomplete&filter_name=' + encodeURIComponent(request) + '&filter_description=' + encodeURIComponent(filter_description),
+                    dataType: 'json',
+                    'success': function (json) {
+                        response($.map(json, function (item) {
+                            return {
+                                label: item['name'],
+                                value: item['image']
+                            }
+                        }));
+                    }
+                });
+            },
+            'select': function (item) {
+                $('#box-adsearch input[name=\'filter_name\']').val(item['label']);
+            }
+        });
+        {% endif %}
+
+        {% if module_adsearch_model %}
+        $('#box-adsearch input[name=\'filter_model\']').autocomplete({
+            'source': function (request, response) {
+                $.ajax({
+                    url: 'index.php?route=extension/module/adsearch/autocompletemodel&filter_model=' + encodeURIComponent(request),
+                    dataType: 'json',
+                    'success': function (json) {
+                        response($.map(json, function (item) {
+                            return {
+                                label: item['model'],
+                                value: item['image']
+                            }
+                        }));
+                    }
+                });
+            },
+            'select': function (item) {
+                $('#box-adsearch input[name=\'filter_model\']').val(item['label']);
+            }
+        });
+        {% endif %}
+
+
+        {% if module_adsearch_category and module_adsearch_brend %}
+        $('#box-adsearch #filter-category-id, #box-adsearch  #filter-sub-category').change(function () {
+
+            $('#box-adsearch  #filter-manufacturer-id').val("");
+            $('#box-adsearch #loader').html('<img src="{{ waitload }}" >&nbsp;&nbsp;')
+            $.ajax({
+                url: "index.php?route=extension/module/adsearch/search",
+                type: 'post',
+                data: $('#form-adsearch').serializeArray(),
+                dataType: 'json',
+                success: function (json) {
+                    {% if module_adsearch_brend.brend %}
+                    $('#box-adsearch #box-manufacturer').html(Manufacturers(json.manufacturer));
+                    {% endif %}
+                    $('#box-adsearch #loader').empty();
+                }
+            });
+        });
+        {% endif %}
+
+        {% if module_adsearch_brend.brend %}
+        function imgActive(imelement) {
+            {% if module_adsearch_brend.image %}
+            {% if module_adsearch_brend.type == 'radio' %}
+            $('#box-adsearch #box-manufacturer .active').removeClass("active");
+            {% endif %}
+            if ($('#box-adsearch #' + imelement.id + 'im').hasClass("active")) {
+                $('#box-adsearch #' + imelement.id + 'im').removeClass("active");
+            } else {
+                $('#box-adsearch #' + imelement.id + 'im').addClass("active");
+            }
+            {% endif %}
+        }
+
+
+        function Manufacturers(brends) {
+            var json_manufacturer = '';
+            if (brends.length) {
+                json_manufacturer += '<div>{{ entry_manufacture }}</div>';
+                json_manufacturer += '<div id="brend-win">';
+                {% if module_adsearch_brend.type == 'checkbox' or module_adsearch_brend.type == 'radio' %}
+                {% if position == 'column_left' or position == 'column_right' %}
+                json_manufacturer += '<div id="box-brend">';
+                $.map(brends, function (item) {
+                    json_manufacturer += '<div><label>';
+                    json_manufacturer += '<input onclick="imgActive(this);" class="filter-manufacturer-id {{ imgbrendclass }}" id="brend' + item.manufacturer_id + '" type="{{ module_adsearch_brend.type }}" name="filter_manufacturer_id[]" value="' + item.manufacturer_id + '" />';
+                    {% if module_adsearch_brend.image %}
+                    json_manufacturer += '<img id="brend' + item.manufacturer_id + 'im" src="' + item.image + '">';
+                    {% endif %}
+                    json_manufacturer += '&nbsp;&nbsp;&nbsp;' + item.name + '</label></div>';
+                });
+                json_manufacturer += '</div>';
+                {% else %}
+                json_manufacturer += '<div id="box-brend">';
+                $.map(brends, function (item) {
+                    json_manufacturer += '<div><label>';
+                    json_manufacturer += '<input onclick="imgActive(this);" class="filter-manufacturer-id {{ imgbrendclass }}" id="brend' + item.manufacturer_id + '" type="{{ module_adsearch_brend.type }}" name="filter_manufacturer_id[]" value="' + item.manufacturer_id + '" />';
+                    {% if module_adsearch_brend.image %}
+                    json_manufacturer += '<img id="brend' + item.manufacturer_id + 'im" src="' + item.image + '">';
+                    {% endif %}
+                    json_manufacturer += '&nbsp;&nbsp;&nbsp;' + item.name + '</label></div>';
+                });
+                json_manufacturer += '</div>';
+                {% endif %}
+                {% else %}
+                json_manufacturer += '<select onchange="imgActive(this);" name="filter_manufacturer_id[]" id="filter-manufacturer" class="filter-manufacturer-id" >';
+                json_manufacturer += '<option value="">{{ text_manufacturer }}</option>';
+                $.map(brends, function (item1) {
+                    json_manufacturer += '<option value="' + item1.manufacturer_id + '">' + item1.name + '</option>';
+                });
+                json_manufacturer += '</select>';
+                {% endif %}
+                json_manufacturer += '</div>';
+            }
+            return json_manufacturer;
+        }
+        {% endif %}
+
+
+        $('#button-adsearch').bind('click', function () {
+            url = 'index.php?route=extension/search/adsearch';
+            $.map($('#box-adsearch #form-adsearch').serializeArray(), function (item) {
+                if (item.value != '' && item.value != '0') {
+                    url += '&' + item.name + '=' + encodeURIComponent(item.value);
+                }
+            });
+            location = url;
+        });
+
+
+        $('select[name=\'filter_category_id\']').on('change', function () {
+            if (this.value == '0') {
+                $('input[name=\'filter_sub_category\']').prop('disabled', true);
+            } else {
+                $('input[name=\'filter_sub_category\']').prop('disabled', false);
+            }
+        });
+
+        //$('select[name=\'filter_category_id\']').trigger('change');
+
+    </script>
+</div>
+    

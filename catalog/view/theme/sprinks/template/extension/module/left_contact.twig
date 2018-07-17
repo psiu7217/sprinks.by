@@ -1,0 +1,10 @@
+<div class="left_contact_block">
+    <p class="title">{{ title }}</p>
+    <p class="address">{{ address }}</p>
+    {% if items %}
+        {% for item in items %}
+            <p><span class="icon_phone {{ item.icon }}">{{ item.text }}</span></p>
+        {% endfor %}
+    {% endif %}
+
+</div>
