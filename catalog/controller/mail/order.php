@@ -273,7 +273,12 @@ class ControllerMailOrder extends Controller {
 		$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
 		$mail->setHtml($this->load->view('mail/order_add', $data));
 		$mail->send();
+		//Отправляем администратору такое же писмо как и клиенту
+        $mail->setTo($this->config->get('config_email'));
+        $mail->send();
 	}
+
+	//info@sprinks.by
 	
 	public function edit($order_info, $order_status_id, $comment) {
 		$language = new Language($order_info['language_code']);
@@ -457,7 +462,7 @@ class ControllerMailOrder extends Controller {
 			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->load->view('mail/order_alert', $data));
-			$mail->send();
+			//$mail->send();
 
 			// Send to additional alert emails
 			$emails = explode(',', $this->config->get('config_mail_alert_email'));
@@ -465,7 +470,7 @@ class ControllerMailOrder extends Controller {
 			foreach ($emails as $email) {
 				if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					$mail->setTo($email);
-					$mail->send();
+					//$mail->send();
 				}
 			}
 		}
