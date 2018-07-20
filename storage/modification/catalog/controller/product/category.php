@@ -89,46 +89,32 @@ class ControllerProductCategory extends Controller {
 
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 
+                /* Brainy Filter (brainyfilter.xml) - Start ->*/
+                if (!$category_info) {
+                    $this->load->language('extension/module/brainyfilter');
+                    $category_info = array(
+                        'name' => $this->language->get('text_bf_page_title'),
+                        'description' => '',
+                        'meta_description' => '',
+                        'meta_keyword' => '',
+                        'meta_title' => $this->language->get('text_bf_page_title'),
+                        'image' => '',
+                    );
+                    $this->request->get['path'] = 0;
+                    $showCategories = false;
+                    $route = 'extension/module/brainyfilter/filter';
+                    $path  = '';
+                } else {
+                    $route = 'product/category';
+                    $path  = 'path=' . $this->request->get['path'];
+                    $showCategories = true;
+                }
+                /* Brainy Filter (brainyfilter.xml) - End ->*/
+                
+
 		if ($category_info) {
-
-            if ($category_info['meta_title']) {
-                if ($page > 1) {
-                    $this->document->setTitle($category_info['meta_title'] . '- страница ' . $page);
-                }else {
-                    $this->document->setTitle($category_info['meta_title']);
-                }
-            } else {
-                if ($page > 1) {
-                    $this->document->setTitle($category_info['name']. ' Epson в Минске') . '- страница ' . $page;
-                }else {
-                    $this->document->setTitle($category_info['name']. ' Epson в Минске');
-                }
-            }
-
-            if ($category_info['meta_description']) {
-                if ($page > 1) {
-                    $this->document->setDescription($category_info['meta_description'] . '- страница ' . $page);
-                }else {
-                    $this->document->setDescription($category_info['meta_description']);
-                }
-            }else {
-                if ($page > 1) {
-                    $this->document->setDescription($category_info['name'] . '- страница ' . $page . '. Доверьте ремонт профессионалам нашего сервисного центра. ✔Доставка по Минску ✔Звоните сейчас ☎ +375 29 193 30 80');
-                }else {
-                    $this->document->setDescription($category_info['name'] . '. Доверьте ремонт профессионалам нашего сервисного центра. ✔Доставка по Минску ✔Звоните сейчас ☎ +375 29 193 30 80');
-                }
-            }
-
-
-		    /*
-		    if ($page > 1) {
-                $this->document->setTitle($category_info['meta_title'] . '  - страница ' . $page);
-            }else {
-                $this->document->setTitle($category_info['meta_title']);
-            }
-
-            $this->document->setTitle($category_info['meta_title']);
-			$this->document->setDescription($category_info['meta_description']);*/
+			$this->document->setTitle($category_info['meta_title']);
+			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
 
 			$data['text_empty'] = $this->language->get('text_empty');
@@ -144,7 +130,7 @@ class ControllerProductCategory extends Controller {
 			// Set the last category breadcrumb
 			$data['breadcrumbs'][] = array(
 				'text' => $category_info['name'],
-				'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'])
+				'href' => $this->url->link($route, $path)
 			);
 
 			if ($category_info['image']) {
@@ -177,7 +163,15 @@ class ControllerProductCategory extends Controller {
 			$data['categories'] = array();
             $data['categories_top'] = array();
 
-			$results = $this->model_catalog_category->getCategories($category_id);
+			
+                /* Brainy Filter (brainyfilter.xml) - Start ->*/
+                if ($showCategories) {
+                $results = $this->model_catalog_category->getCategories($category_id);
+                } else {
+                    $results = array();
+                }
+                /* Brainy Filter (brainyfilter.xml) - End ->*/
+            
 
 
 
@@ -189,7 +183,7 @@ class ControllerProductCategory extends Controller {
 
 				$data['categories'][] = array(
 					'name' => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
+					'href' => $this->url->link($route, $path . '_' . $result['category_id'] . $url)
 				);
 
 				if ($result['brand_menu']) {
@@ -197,7 +191,7 @@ class ControllerProductCategory extends Controller {
                         'id'    => $result['category_id'],
                         'name'  => $result['name'],
                         'image'  => $this->model_tool_image->resize($result['image'], 150, 150),
-                        'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
+                        'href' => $this->url->link($route, $path . '_' . $result['category_id'] . $url)
                     );
                 }
 			}
@@ -214,8 +208,10 @@ class ControllerProductCategory extends Controller {
 				'limit'              => $limit
 			);
 
+            $filter_data['filter_bfilter'] = true;
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
+            $filter_data['filter_bfilter'] = true;
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
@@ -279,57 +275,57 @@ class ControllerProductCategory extends Controller {
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_default'),
 				'value' => 'p.sort_order-ASC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.sort_order&order=ASC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=p.sort_order&order=ASC' . $url)
 			);
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_name_asc'),
 				'value' => 'pd.name-ASC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=pd.name&order=ASC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=pd.name&order=ASC' . $url)
 			);
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_name_desc'),
 				'value' => 'pd.name-DESC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=pd.name&order=DESC' . $url)
 			);
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_price_asc'),
 				'value' => 'p.price-ASC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=ASC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=p.price&order=ASC' . $url)
 			);
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_price_desc'),
 				'value' => 'p.price-DESC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=p.price&order=DESC' . $url)
 			);
 
 			if ($this->config->get('config_review_status')) {
 				$data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
-					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
+					'href'  => $this->url->link($route, $path . '&sort=rating&order=DESC' . $url)
 				);
 
 				$data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
-					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=ASC' . $url)
+					'href'  => $this->url->link($route, $path . '&sort=rating&order=ASC' . $url)
 				);
 			}
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_asc'),
 				'value' => 'p.model-ASC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.model&order=ASC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=p.model&order=ASC' . $url)
 			);
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_desc'),
 				'value' => 'p.model-DESC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.model&order=DESC' . $url)
+				'href'  => $this->url->link($route, $path . '&sort=p.model&order=DESC' . $url)
 			);
 
 			$url = '';
@@ -356,7 +352,7 @@ class ControllerProductCategory extends Controller {
 				$data['limits'][] = array(
 					'text'  => $value,
 					'value' => $value,
-					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=' . $value)
+					'href'  => $this->url->link($route, $path . $url . '&limit=' . $value)
 				);
 			}
 
@@ -382,13 +378,17 @@ class ControllerProductCategory extends Controller {
 			$pagination->total = $product_total;
 			$pagination->page = $page;
 			$pagination->limit = $limit;
-			$pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
+			$pagination->url = $this->url->link($route, $path . $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+
+                /* Brainy Filter (brainyfilter.xml) - Start ->*/
+                if (isset($category_info['category_id'])) {
+                /* Brainy Filter (brainyfilter.xml) - End ->*/
 			if ($page == 1) {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id']), 'canonical');
 			} else {
@@ -402,6 +402,10 @@ class ControllerProductCategory extends Controller {
 			if ($limit && ceil($product_total / $limit) > $page) {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page='. ($page + 1)), 'next');
 			}
+
+                /* Brainy Filter (brainyfilter.xml) - Start ->*/
+                }
+                /* Brainy Filter (brainyfilter.xml) - End ->*/
 
 			$data['sort'] = $sort;
 			$data['order'] = $order;

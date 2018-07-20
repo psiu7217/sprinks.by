@@ -994,7 +994,8 @@ footer .powered {
 .blog.blog_post .main_description a{
     font-size: 16px;
 }
-#box-adsearch .panel-heading {
+#box-adsearch .panel-heading,
+.title_block .title{
     font-family: Arial,sans-serif;
     font-size: 18px;
     font-weight: 700;
@@ -1058,4 +1059,11 @@ footer .powered {
 #modal_success .modal-footer .btn {
     display: block;
     margin: 0 auto;
+}
+
+.title_block .title {
+    padding: 10px 15px 5px;
+}
+.bf-layout-id-37 .bf-count {
+    background: rgb(39, 59, 130);
 }
