@@ -3,15 +3,13 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 	public function index() {
 		if ($this->config->get('feed_google_sitemap_status')) {
 			$output  = '<?xml version="1.0" encoding="UTF-8"?>';
-			//$output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
-            $output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+			$output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
 
 			$this->load->model('catalog/product');
 			$this->load->model('tool/image');
 
 			$products = $this->model_catalog_product->getProducts();
 
-			/*
 			foreach ($products as $product) {
 				if ($product['image']) {
 					$output .= '<url>';
@@ -27,7 +25,6 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 					$output .= '</url>';
 				}
 			}
-			*/
 
 			$this->load->model('catalog/category');
 
@@ -85,7 +82,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 					$output .= '<loc>' . $this->url->link('blog/category', 'blogpath=' . $category_1['blog_category_id'] . '_' . $category_2['blog_category_id']) . '</loc>';
 					$output .= '<changefreq>weekly</changefreq>';
 					$output .= '<priority>0.7</priority>';
-					$output .= '</url>';
+					$output .= '</url>';				
 				}
 			}
 
@@ -98,7 +95,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 				$output .= '<priority>0.5</priority>';
 				$output .= '</url>';
 			}
-
+			
 			$output .= '</urlset>';
 
 			$this->response->addHeader('Content-Type: application/xml');

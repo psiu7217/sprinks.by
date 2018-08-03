@@ -49,9 +49,9 @@ class ControllerStartupSeoUrl extends Controller {
 				} else {
 			$this->request->get['blogpath'] .= '_' . $url[1];
 			}}
-
-					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0]
-			!= 'category_id' && $url[0] != 'blog_category_id' && $url[0] != 'blog_id' && $url[0]
+			
+					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] 
+			!= 'category_id' && $url[0] != 'blog_category_id' && $url[0] != 'blog_id' && $url[0] 
 			 != 'product_id') {
 						$this->request->get['route'] = $query->row['query'];
 					}
@@ -70,15 +70,15 @@ class ControllerStartupSeoUrl extends Controller {
 			$this->request->get['route'] = 'blog/blog/comment';
 			} elseif (isset($this->request->get['blog_id'])) {
 			$this->request->get['route'] = 'blog/blog';
-			} elseif ($this->request->get['_route_'] ==  'blog_home') {
+			} elseif ($this->request->get['_route_'] ==  'blog_home') { 
 			$this->request->get['route'] = 'blog/home';
-
+			
 				} elseif (isset($this->request->get['path'])) {
 					$this->request->get['route'] = 'product/category';
 
 			} elseif (isset($this->request->get['blogpath'])) {
 			$this->request->get['route'] = 'blog/category';
-
+			
 				} elseif (isset($this->request->get['manufacturer_id'])) {
 					$this->request->get['route'] = 'product/manufacturer/info';
 				} elseif (isset($this->request->get['information_id'])) {
@@ -141,7 +141,7 @@ class ControllerStartupSeoUrl extends Controller {
 
 		foreach ($data as $key => $value) {
 			if (isset($data['route'])) {
-				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') ||
+				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || 
 			($data['route'] == 'information/information' && $key == 'information_id') || ($data['route'] == 'blog/blog' && $key == 'blog_id'))
 			 {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -170,7 +170,7 @@ class ControllerStartupSeoUrl extends Controller {
 			} else {
 			$url = '';
 			}
-
+			
 				} elseif ($key == 'path') {
 					$categories = explode('_', $value);
 

@@ -45,7 +45,7 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-		
+
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -72,8 +72,8 @@ class ControllerInformationContact extends Controller {
 		}
 
 
-			$data['text_contact'] = $this->language->get('text_contact'); 
-		
+			$data['text_contact'] = $this->language->get('text_contact');
+
 
 			$data['text_contact'] = $this->language->get('text_contact'); 
 		
@@ -138,7 +138,7 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$data['agree'] = false;
 		}
-		
+
 
 		$data['locations'] = array();
 
@@ -281,40 +281,7 @@ class ControllerInformationContact extends Controller {
 		$this->response->setOutput($this->load->view('common/success', $data));
 	}
 
-    public function send(){
-        $data = 'ok';
-
-        $email = $this->config->get('config_email');
-
-        $subject = 'Заявка от sprinks.by';
-
-        $headers = "From: sprinks.by\r\n";
-        $headers .= "CC: info@sprinks.by\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-
-        $message = '<html><body>';
-        $message .= '<h1 style="color:#000;">Ура новая заявка!!!</h1>';
-
-        if (isset($_POST['user_name']) && $_POST['user_name'])
-            $message .= '<p>Имя: <strong>'.$_POST['user_name'].'</strong></p>';
-
-        if (isset($_POST['user_phone']) && $_POST['user_phone'])
-            $message .= '<p>Телефон: <strong>'.$_POST['user_phone'].'</strong></p>';
-
-        if (isset($_POST['user_time']) && $_POST['user_time'])
-            $message .= '<p>Время звонка: <strong>'.$_POST['user_time'].'</strong></p>';
-
-        if (isset($_POST['user_item']) && $_POST['user_item'])
-            $message .= '<p>Устройство: <strong>'.$_POST['user_item'].'</strong></p>';
-
-
-
-        $message .= '</body></html>';
-
-
-        mail($email, $subject, $message, $headers);
-
-        $this->response->setOutput(json_encode($data));
+	public function send(){
+	    echo 'ok';
     }
 }
