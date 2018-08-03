@@ -38,7 +38,7 @@ class ModelExtensionShippingCitylink extends Model {
 			if ((float)$cost) {
 				$quote_data['citylink'] = array(
 					'code'         => 'citylink.citylink',
-					'title'        => $this->language->get('text_title') . ': 1 товар (Платная от 6 рублей (бесплатно при заказе от 250 рублей) (бесплатно при проведении акций))',
+					'title'        => $this->language->get('text_title') . ': Бесплатно (стоимость покупки от 250 руб.), 6 руб. (стоимость покупки от 50 до 249 руб.), 8 руб. (стоимость покупки до 49 руб.)',
 					'cost'         => $cost,
 					'tax_class_id' => $this->config->get('shipping_citylink_tax_class_id'),
 					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('shipping_citylink_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
