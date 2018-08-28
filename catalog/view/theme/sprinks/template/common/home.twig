@@ -18,17 +18,25 @@
 <div class="seo_text_home">
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <img src="catalog/view/theme/sprinks/image/small-picture_v2.jpg" alt="">
+            <div class="col-sm-3 hidden-xs">
+                <img src="catalog/view/theme/sprinks/image/small-picture_v2.jpg" alt="" class="hidden-xs">
+                <img src="catalog/view/theme/sprinks/image/small-picture_v2_min.jpg" alt="" class="hidden visible-xs">
             </div>
-            <div class="col-sm-9">
-
-
-
+            <div class="col-sm-9 mobile_hight">
                 {{ content_bottom }}
             </div>
+            <div class="btn_torget hidden visible-xs btn btn_blue">Подробнее</div>
         </div>
     </div>
 </div>
+
+
+<script>
+    //Раскрыть весь текст на мобильной версии
+    $('.seo_text_home .btn_torget').click(function () {
+        $(this).prev().css('height', 'auto');
+        $(this).remove();
+    });
+</script>
 
 {{ footer }}

@@ -115,11 +115,129 @@
     .information_page table{
         width: 100% !important;
     }
+    .mobile_hight {
+        height: 350px;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+    #product-product .product_tabs .nav li {
+        float: none;
+        text-align: center;
+    }
+    #product-product .product_tabs .nav li a {
+        margin: 0;
+    }
+    #product-product .product_tabs .nav li.active a {
+        color: #333;
+        background: #dcdcdc;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    #product-product .product_tabs .tab-content {
+        box-shadow: none;
+    }
+    #product-product .product_tabs .tab-content .tab-pane {
+        margin: 10px 15px;
+    }
+    #product-product .product_tabs .tab-content .tab-pane .product-layout.product-grid {
+        padding: 0;
+    }
+    #tab-description li {
+        word-wrap: break-word;
+    }
 }
 @media screen and (max-width: 590px) {
 
 }
 @media screen and (max-width: 450px) {
+    header .top_block {
+        height: 60px;
+    }
+    header .top_block .phones_block {
+        height: 50px;
+    }
+    header .top_block .time_job {
+        flex-direction: column;
+        height: 40px;
+    }
+    header .top_block .time_job p {
+        margin: 0;
+    }
+    .seo_text_home img {
+        margin: 0 auto;
+        display: block;
+        width: 100%;
+    }
+    .category-info .image {
+        float: none;
+        width: 100%;
+        height: auto;
+        margin: 15px 0;
+    }
+    #tservices,
+    #tservices tbody,
+    #tservices tr,
+    #tservices td{
+        display: block;
+    }
+    #tservices a {
+        display: block;
+        text-align: center;
+    }
+    .information_page table,
+    .information_page tr{
+        display: block;
+    }
+    .information_page td {
+        display: inline-block;
+    }
+    #contact_table {
+
+    }
+    #contact_table td {
+        width: 100% !important;
+        text-align: center;
+    }
+    #contact_table td img {
+        display: block;
+        margin: 0 auto;
+        float: none !important;
+    }
+    #contact_table td table tbody {
+        display: block;
+    }
+    #contact_table td table tbody span img {
+        display: inline-block;
+    }
+    #table_contact_trans,
+    #table_contact_trans tbody,
+    #table_contact_trans td {
+        display: block;
+    }
+    #table_contact_trans td {
+        width: 100% !important;
+        text-align: center;
+    }
+    #table_contact_trans td img {
+        display: block;
+        margin: 0 auto;
+        float: none !important;
+    }
+    .proizvod_epson {
+        text-align: center;
+    }
+    .proizvod_epson strong {
+        display: block;
+    }
+    .proizvod_epson strong span {
+        display: block;
+    }
+    .proizvod_epson strong span img {
+        display: inline-block;
+        width: 30% !important;
+        height: auto !important;
+        margin: 5px 0;
+    }
 
 }
 

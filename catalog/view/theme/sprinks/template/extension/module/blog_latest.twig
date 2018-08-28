@@ -2,7 +2,7 @@
     <p class="main_title">Новости</p>
 
     {% if posts %}
-        <div class="row">
+        <div class="row hidden-xs">
             {% for blog in posts %}
                 <div class="col-sm-4">
                     <div class="blog_item">
@@ -24,5 +24,58 @@
                 </div>
             {% endfor %}
         </div>
+
+
+        <div class="hidden visible-xs">
+            <div id="banner_last_blog" class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for blog in posts %}
+                        <div class="swiper-slide">
+                            <div class="blog_item">
+
+                                <div class="summary">
+                                    {% if blog.image  and  thumb %}
+                                        <div class="image text-center">
+                                            <a href="{{ blog.href }}">
+                                                <img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}"/>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+
+                                    <p class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></p>
+
+                                    <p class="descr">{{ blog.description }}</p>
+                                    <p><a href="{{ blog.href }}">{{ text_read_more }} <i class="fa fa-long-arrow-right"></i></a></p>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="swiper-pagination slideshow_2"></div>
+            <div class="swiper-pager">
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+
+
     {% endif %}
 </div>
+
+<script type="text/javascript"><!--
+    $('#banner_last_blog').swiper({
+        mode: 'horizontal',
+        slidesPerView: 1,
+        pagination: '.slideshow_2',
+        paginationClickable: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 30,
+        autoplay: 2500,
+        autoplayDisableOnInteraction: true,
+        loop: true
+    });
+    --></script>
